@@ -1,0 +1,28 @@
+<ion-modal-view>
+
+        <ion-header-bar class="bar bar-header bar-dark">
+        <div class="buttons">             
+            <button class="button button-clear button-primary" ng-click="closePortDiscoveryModal()"><i class="icon ion-chevron-left"></i></button>  
+        </div>
+            <h1 class="title">Available Printers</h1>
+        <div class="buttons">
+            <button class="button button-clear button-primary" ng-click="portDiscovery()"><i class="icon ion-refresh"></i></button>    
+        </div>
+           </ion-header-bar>
+
+    <ion-content class="padding">
+
+            <ion-list ng-if="printers.length > 0">
+            <div class="item item-divider">List</div>
+            <ion-radio ng-model="selectedPrinter.portName" ng-repeat="printer in printers" ng-value="printer.portName">
+                <p>Name: {{printer.portName}}</p>
+                <p>MacAddress: {{printer.macAddress}}</p>
+            </ion-radio>
+            </ion-list>
+        <button class="button button-full button-dark" ng-click="closePortDiscoveryModal()">
+            OK
+        </button>
+  
+    </ion-content>
+
+</ion-modal-view>

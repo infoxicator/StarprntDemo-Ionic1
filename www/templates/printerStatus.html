@@ -1,0 +1,50 @@
+<ion-modal-view>
+
+        <ion-header-bar class="bar bar-header bar-dark">
+        <div class="buttons">             
+            <button class="button button-clear button-primary" ng-click="closePrinterStatusModal()"><i class="icon ion-chevron-left"></i></button>  
+        </div>
+            <h1 class="title">Device Status</h1>
+        <div class="buttons">
+            <button class="button button-clear button-primary" ng-click="checkStatus()"><i class="icon ion-refresh"></i></button>    
+        </div>
+           </ion-header-bar>
+
+    <ion-content class="padding">
+
+            <ion-list ng-if="printers.length > 0">
+                <div class="item item-divider">Device Status</div>
+                <ion-item class="item-icon-right">
+                    Online:
+                    <span class="badge badge-positive" ng-if="printerStatus && !printerStatus.offline">Online</span>
+                    <span class="badge badge-assertive" ng-if="printerStatus.offline">Offline</span>
+                </ion-item>
+                <ion-item class="item-icon-right">
+                        Cover:
+                        <span class="badge badge-positive" ng-if="printerStatus && !printerStatus.coverOpen">Closed</span>
+                        <span class="badge badge-assertive" ng-if="printerStatus.coverOpen">Open</span>
+                </ion-item>
+                <ion-item class="item-icon-right">
+                        Paper:
+                        <span class="badge badge-positive" ng-if="printerStatus && !printerStatus.receiptPaperEmpty">Ready</span>
+                        <span class="badge badge-assertive" ng-if="printerStatus.receiptPaperEmpty">Empty</span>
+                </ion-item>
+                <ion-item class="item-icon-right">
+                        Paper Cutter:
+                        <span class="badge badge-positive" ng-if="printerStatus && !printerStatus.cutterError">Ready</span>
+                    <span class="badge badge-assertive" ng-if="printerStatus.cutterError">Error</span>
+                </ion-item>
+                <div class="item item-divider">Firmware Information</div>
+                <ion-item class="item-icon-right">
+                    Model Name:
+                    <span class="badge badge-positive" ng-if="printerStatus && printerStatus.ModelName">{{printerStatus.ModelName}}</span>
+                </ion-item>
+                <ion-item class="item-icon-right">
+                    Firmware Version:
+                    <span class="badge badge-positive" ng-if="printerStatus && printerStatus.FirmwareVersion">{{printerStatus.FirmwareVersion}}</span>
+                </ion-item>
+            </ion-list>
+  
+    </ion-content>
+
+</ion-modal-view>
