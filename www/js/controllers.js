@@ -2,6 +2,7 @@ angular.module('starter.controllers', [])
 
 .controller('HomeCtrl', function ($scope, $ionicPlatform, $ionicPopup, $ionicModal, $ionicLoading) {
   $scope.printers = [];
+  $scope.emulation = "EscPosMobile"
   $scope.printerStatus;
   var StarPRTN;
   $ionicPlatform.ready(function () {
@@ -34,7 +35,7 @@ angular.module('starter.controllers', [])
       ]
     });
     myPopup.then(function() {
-        $ionicLoading.show({template: '<ion-spinner></ion-spinner> Loading...'});
+        $ionicLoading.show({template: '<ion-spinner></ion-spinner> Communicating...'});
         $scope.showPortDiscoveryModal(); 
     });
    };
@@ -99,7 +100,7 @@ angular.module('starter.controllers', [])
     $scope.checkStatus = function(){
        if (StarPRTN) {
             $ionicLoading.show({template: '<ion-spinner></ion-spinner> Communicating...'});
-            StarPRTN.checkStatus($scope.selectedPrinter.portName, function (result) {
+            StarPRTN.checkStatus($scope.selectedPrinter.portName, $scope.emulation, function (result) {
                 console.log(result)
                 $scope.printerStatus = result;
                 $ionicLoading.hide();
@@ -112,5 +113,82 @@ angular.module('starter.controllers', [])
             $ionicLoading.hide();
         }
     }
+    
+    // Print Sample 
+
+    $scope.printRawText = function(){
+        var printObj = {text: "         Star Clothing Boutique\n" +
+        "                        123 Star Road\n" +
+        "                      City, State 12345\n",
+        cutReceipt: "true",
+        openCashDrawer: "false",
+        };
+
+        if (StarPRTN) {
+             $ionicLoading.show({template: '<ion-spinner></ion-spinner> Communicating...'});
+             StarPRTN.printRawText($scope.selectedPrinter.portName, $scope.emulation, printObj, function (result) {
+                 console.log(result)
+                 //$scope.printerStatus = result;
+                 $ionicLoading.hide();
+             }, function(error){
+                     $ionicLoading.hide();
+                     alert(error);
+           });
+          } else {
+             alert('Printer plugin not available');
+             $ionicLoading.hide();
+         }
+     };
+     $scope.printRasterReceipt = function(){
+
+        var printObj = {
+                
+        text : "        Star Clothing Boutique\n" +
+        "             123 Star Road\n" +
+        "           City, State 12345\n" +
+        "\n" +
+        "Date:MM/DD/YYYY          Time:HH:MM PM\n" +
+        "--------------------------------------\n" +
+        "SALE\n" +
+        "SKU            Description       Total\n" +
+        "300678566      PLAIN T-SHIRT     10.99\n" +
+        "300692003      BLACK DENIM       29.99\n" +
+        "300651148      BLUE DENIM        29.99\n" +
+        "300642980      STRIPED DRESS     49.99\n" +
+        "30063847       BLACK BOOTS       35.99\n" +
+        "\n" +
+        "Subtotal                        156.95\n" +
+        "Tax                               0.00\n" +
+        "--------------------------------------\n" +
+        "Total                          $156.95\n" +
+        "--------------------------------------\n" +
+        "\n" +
+        "Charge\n" +
+        "156.95\n" +
+        "Visa XXXX-XXXX-XXXX-0123\n" +
+        "Refunds and Exchanges\n" +
+        "Within 30 days with receipt\n" +
+        "And tags attached\n",
+        fontSize: 25,
+        paperWidth: 576
+        };
+
+    
+
+        if (StarPRTN) {
+             $ionicLoading.show({template: '<ion-spinner></ion-spinner> Communicating...'});
+             StarPRTN.printRasterReceipt($scope.selectedPrinter.portName, $scope.emulation, printObj, function (result) {
+                 console.log(result)
+                 //$scope.printerStatus = result;
+                 $ionicLoading.hide();
+             }, function(error){
+                     $ionicLoading.hide();
+                     alert(error);
+           });
+          } else {
+             alert('Printer plugin not available');
+             $ionicLoading.hide();
+         }
+     }
   
 });
