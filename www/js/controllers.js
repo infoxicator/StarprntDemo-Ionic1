@@ -5,8 +5,10 @@ angular.module('starter.controllers', [])
   $scope.emulation = "EscPosMobile"
   $scope.printerStatus;
   var StarPRTN;
+  var Camera;
   $ionicPlatform.ready(function () {
       StarPRTN = starprnt;
+      Camera = navigator.camera;
   });
 
 
@@ -189,6 +191,66 @@ angular.module('starter.controllers', [])
              alert('Printer plugin not available');
              $ionicLoading.hide();
          }
+     }
+
+     $scope.printFromCamera = function(){
+        var options = {
+            destinationType: Camera.DestinationType.FILE_URI,
+            saveToPhotoAlbum: false,
+            correctOrientation: true,
+            encodingType: Camera.EncodingType.JPEG
+        }
+         if(Camera){
+             Camera.getPicture(function(uri){
+                 console.log(uri);
+                 printPicture(uri);
+
+             }, function(error){
+                 alert(error);
+             }, options)
+         }else{
+             alert("camera plugin unavailable");
+         }
+
+     }
+     $scope.printFromLibrary = function (){
+        var options = {
+            destinationType: Camera.DestinationType.FILE_URI,
+            sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+            correctOrientation: true,
+            encodingType: Camera.EncodingType.JPEG
+        }
+         if(Camera){
+             Camera.getPicture(function(uri){
+                 console.log(uri);
+                 printPicture(uri);
+             }, function(error){
+                 alert(error);
+             }, options)
+         }else{
+             alert("camera plugin unavailable");
+         }
+     }
+     printPicture = function(uri){
+         var printObj = {
+             uri: uri,
+             width: 576
+         };
+        if (StarPRTN) {
+            $ionicLoading.show({template: '<ion-spinner></ion-spinner> Communicating...'});
+            StarPRTN.printImage($scope.selectedPrinter.portName, $scope.emulation, printObj, function (result) {
+                console.log(result)
+                $ionicLoading.hide();
+            }, function(error){
+                    $ionicLoading.hide();
+                    alert(error);
+          });
+         } else {
+            alert('Printer plugin not available');
+            $ionicLoading.hide();
+        }
+         
+
      }
   
 });
