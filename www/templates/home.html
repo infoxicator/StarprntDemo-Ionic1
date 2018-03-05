@@ -4,11 +4,11 @@
             <div class="item item-divider">
                       Destination Device
             </div>                  
-            <a class="item" ng-if="selectedPrinter.portName" ng-click="printerTypePopup()">
-                    <p>Name: {{selectedPrinter.portName}}</p>
-                    <p>MacAddress: {{selectedPrinter.macAddress}}</p>
+            <a class="item" ng-if="selectedPrinter.printer.portName" ng-click="printerTypePopup()">
+                    <p>Name: {{selectedPrinter.printer.portName}}</p>
+                    <p>MacAddress: {{selectedPrinter.printer.macAddress}}</p>
             </a>
-            <a class="item" href="#" ng-if="!selectedPrinter.portName" ng-click="printerTypePopup()">
+            <a class="item" href="#" ng-if="!selectedPrinter.printer.portName" ng-click="printerTypePopup()">
                     Select a printer...
             </a>
             <div class="item item-divider">

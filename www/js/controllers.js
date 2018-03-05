@@ -2,7 +2,8 @@ angular.module('starter.controllers', [])
 
 .controller('HomeCtrl', function ($scope, $ionicPlatform, $ionicPopup, $ionicModal, $ionicLoading) {
   $scope.printers = [];
-  $scope.emulation = "EscPosMobile"
+  $scope.emulation = {
+      value: ''};
   $scope.printerStatus;
   var StarPRTN;
   var Camera;
@@ -10,9 +11,32 @@ angular.module('starter.controllers', [])
       StarPRTN = starprnt;
       Camera = navigator.camera;
   });
+  
+  //Emulation based on printer type (model)
+  $scope.printerModels = [
+    {text: "mPOP", emulation: "StarPRNT" },
+    {text: "FVP10", emulation: "StarLine" },
+    {text: "TSP100", emulation: "StarGraphic" },
+    {text: "TSP650II", emulation: "StarLine" },
+    {text: "TSP700II", emulation: "StarLine" },
+    {text: "TSP800II", emulation: "StarLine" },
+    {text: "SP700", emulation: "StarDotImpact" },
+    {text: "SM-S210i", emulation: "EscPosMobile" },
+    {text: "SM-S220i", emulation: "EscPosMobile" },
+    {text: "SM-S230i", emulation: "EscPosMobile" },
+    {text: "SM-T300i/T300", emulation: "EscPosMobile" },
+    {text: "SM-T400i", emulation: "EscPosMobile" },
+    {text: "SM-L200", emulation: "StarPRNT" },
+    {text: "SM-L300", emulation: "StarPRNT" },
+    {text: "BSC10", emulation: "EscPos" },
+    {text: "SM-S210i StarPRNT", emulation: "StarPRNT" },
+    {text: "SM-S220i StarPRNT", emulation: "StarPRNT" },
+    {text: "SM-S230i StarPRNT", emulation: "StarPRNT" },
+    {text: "SM-T300i/T300 StarPRNT", emulation: "StarPRNT" },
+    {text: "SM-T400i StarPRNT", emulation: "StarPRNT" }
+]
 
-
-  //Find available printers
+   //Find available printers
   $scope.printerTypePopup = function() {
     $scope.selectedType = { value: 'All'};
     $scope.types = [
@@ -46,6 +70,7 @@ angular.module('starter.controllers', [])
         $ionicModal.fromTemplateUrl('templates/portDiscovery.html', {
             scope: $scope
         }).then(function (modal) {
+            $scope.selectedPrinter = {}
             $scope.portDiscoveryModal = modal;
             $scope.portDiscoveryModal.show();
             $scope.portDiscovery();  
@@ -53,9 +78,9 @@ angular.module('starter.controllers', [])
     };  
  
     $scope.closePortDiscoveryModal = function () {
+            //console.log($scope.selectedPrinter); 
             $scope.portDiscoveryModal.hide();
             $scope.portDiscoveryModal.remove();  
-            console.log($scope.selectedPrinter);           
     };
     
     
@@ -64,9 +89,6 @@ angular.module('starter.controllers', [])
             StarPRTN.portDiscovery($scope.selectedType.value, function (result) {
             console.log(result)
                 $scope.printers = result;
-                if($scope.printers[0] && $scope.printers[0].portName){
-                  $scope.selectedPrinter =  $scope.printers[0];
-                }
                 $ionicLoading.hide();
           }, function(err){
             $ionicLoading.hide();
@@ -77,10 +99,29 @@ angular.module('starter.controllers', [])
         }
     };
 
+    $scope.showEmulationPopup = function() {
+
+    var emulationPopup = $ionicPopup.show({
+        template: '<ion-list><ion-radio ng-repeat="printerModel in printerModels" ng-model="emulation.value" ng-value="printerModel.emulation">{{printerModel.text}}</ion-radio>',
+        title: 'Confirm. What is your printer',
+        scope: $scope,
+        buttons: [
+          { text: 'Cancel' },
+          {
+            text: '<b>OK</b>',
+            type: 'button-dark',
+            onTap: function(e) {
+                $scope.closePortDiscoveryModal();
+            }
+          }
+        ]
+      });    
+    }
+
     //Check Printer status
 
     $scope.showPrinterStatusModal = function () {
-        if($scope.selectedPrinter){
+        if($scope.selectedPrinter.printer){
             $ionicModal.fromTemplateUrl('templates/printerStatus.html', {
                 scope: $scope
             }).then(function (modal) {
@@ -96,13 +137,13 @@ angular.module('starter.controllers', [])
     $scope.closePrinterStatusModal = function () {
             $scope.printerStatusModal.hide();
             $scope.printerStatusModal.remove();  
-            console.log($scope.selectedPrinter);           
+            //console.log($scope.selectedPrinter);           
     };
 
     $scope.checkStatus = function(){
        if (StarPRTN) {
             $ionicLoading.show({template: '<ion-spinner></ion-spinner> Communicating...'});
-            StarPRTN.checkStatus($scope.selectedPrinter.portName, $scope.emulation, function (result) {
+            StarPRTN.checkStatus($scope.selectedPrinter.printer.portName, $scope.emulation.value, function (result) {
                 console.log(result)
                 $scope.printerStatus = result;
                 $ionicLoading.hide();
@@ -128,7 +169,7 @@ angular.module('starter.controllers', [])
 
         if (StarPRTN) {
              $ionicLoading.show({template: '<ion-spinner></ion-spinner> Communicating...'});
-             StarPRTN.printRawText($scope.selectedPrinter.portName, $scope.emulation, printObj, function (result) {
+             StarPRTN.printRawText($scope.selectedPrinter.printer.portName, $scope.emulation, printObj, function (result) {
                  console.log(result)
                  //$scope.printerStatus = result;
                  $ionicLoading.hide();
@@ -179,7 +220,7 @@ angular.module('starter.controllers', [])
 
         if (StarPRTN) {
              $ionicLoading.show({template: '<ion-spinner></ion-spinner> Communicating...'});
-             StarPRTN.printRasterReceipt($scope.selectedPrinter.portName, $scope.emulation, printObj, function (result) {
+             StarPRTN.printRasterReceipt($scope.selectedPrinter.printer.portName, $scope.emulation.value, printObj, function (result) {
                  console.log(result)
                  //$scope.printerStatus = result;
                  $ionicLoading.hide();
@@ -238,7 +279,7 @@ angular.module('starter.controllers', [])
          };
         if (StarPRTN) {
             $ionicLoading.show({template: '<ion-spinner></ion-spinner> Communicating...'});
-            StarPRTN.printImage($scope.selectedPrinter.portName, $scope.emulation, printObj, function (result) {
+            StarPRTN.printImage($scope.selectedPrinter.printer.portName, $scope.emulation.value, printObj, function (result) {
                 console.log(result)
                 $ionicLoading.hide();
             }, function(error){
