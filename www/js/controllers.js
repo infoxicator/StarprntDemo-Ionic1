@@ -164,12 +164,12 @@ angular.module('starter.controllers', [])
         "                        123 Star Road\n" +
         "                      City, State 12345\n",
         cutReceipt: "true",
-        openCashDrawer: "false",
+        openCashDrawer: "true",
         };
 
         if (StarPRTN) {
              $ionicLoading.show({template: '<ion-spinner></ion-spinner> Communicating...'});
-             StarPRTN.printRawText($scope.selectedPrinter.printer.portName, $scope.emulation, printObj, function (result) {
+             StarPRTN.printRawText($scope.selectedPrinter.printer.portName, $scope.emulation.value, printObj, function (result) {
                  console.log(result)
                  //$scope.printerStatus = result;
                  $ionicLoading.hide();
@@ -213,7 +213,9 @@ angular.module('starter.controllers', [])
         "Within 30 days with receipt\n" +
         "And tags attached\n",
         fontSize: 25,
-        paperWidth: 576
+        paperWidth: 576,
+        cutReceipt:"true",
+        openCashDrawer:"true"
         };
 
     
@@ -290,8 +292,24 @@ angular.module('starter.controllers', [])
             alert('Printer plugin not available');
             $ionicLoading.hide();
         }
-         
-
      }
+
+     $scope.openCashDrawer = function(){
+       if (StarPRTN) {
+           $ionicLoading.show({template: '<ion-spinner></ion-spinner> Communicating...'});
+           StarPRTN.openCashDrawer($scope.selectedPrinter.printer.portName, $scope.emulation.value, function (result) {
+               console.log(result)
+               $ionicLoading.hide();
+           }, function(error){
+                   $ionicLoading.hide();
+                   alert(error);
+         });
+        } else {
+           alert('Printer plugin not available');
+           $ionicLoading.hide();
+       }
+        
+
+    }
   
 });
