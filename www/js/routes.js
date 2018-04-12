@@ -15,6 +15,11 @@ angular.module('starter.routes', [])
        templateUrl: 'templates/home.html',
       controller: 'HomeCtrl'
     })
+    .state('stario/:portName/:emulation', {
+      url: '/stario/:portName/:emulation',
+       templateUrl: 'templates/starioextmanager.html',
+      controller: 'StarIOCtrl'
+    })
       
     
       

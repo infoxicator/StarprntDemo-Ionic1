@@ -1,1 +1,22 @@
 /* Empty. Add your own CSS if you like */
+@keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  h1.Online {
+    color: blue;
+    text-align: center;
+    font-size: 4rem;
+    padding: 50px;
+  }
+  h1.Offline {
+    color: red;
+    text-align: center;
+    font-size: 4rem;
+    padding: 50px;
+  }
+  .button.button-dark {
+    border-color: white;
+  }

@@ -1,0 +1,36 @@
+<ion-view view-title="StarIOExt Manager">
+    <ion-content class="has-header padding">
+        
+        <h1 class="{{status}}"><blink>{{status}}</blink></h1>
+
+        <h2>Cover: {{coverStatus}}</h2>
+        <h2>Paper: {{paperStatus}}</h2>
+        <h2>Cash Drawer: {{drawerStatus}}</h2>
+
+
+        <div class="button-bar">
+            <button class="button button-dark button-block" ng-click="printRawText()">Print Raw Text</button>
+            <button class="button button-dark button-block" ng-click="printRasterReceipt()">Print Raster Receipt</button>
+          </div>
+          <div class="button-bar">
+            <a class="button button-dark button-block" ng-click="openCashDrawer()">Open Cash Drawer</a>
+            <a class="button button-dark button-block" ng-click="print()">Print ICommandBuilder</a>
+          </div>
+          <div class="button-bar">
+            <a class="button button-dark button-block" ng-click="print(true)">Print Tabs</a>
+            <a class="button button-dark button-block" ng-click="print(false, true)">Print (QRCode)</a>
+          </div>
+          <div class="button-bar">
+            <a class="button button-dark button-block" ng-click="printFromCamera()">Camera</a>
+            <a class="button button-dark button-block" ng-click="printFromLibrary()">Library</a>
+          </div>
+          <div class="button-bar">
+            <a class="button button-dark button-block" ng-click="appendBitmap()">Bitmap (ICommandBuilder)</a>
+            <a class="button button-dark button-block" ng-click="disconnect()">Disconnect </a>
+          </div>
+        
+        
+     
+    
+    </ion-content>
+</ion-view>

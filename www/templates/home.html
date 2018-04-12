@@ -7,6 +7,7 @@
             <a class="item" ng-if="selectedPrinter.printer.portName" ng-click="printerTypePopup()">
                     <p>Name: {{selectedPrinter.printer.portName}}</p>
                     <p>MacAddress: {{selectedPrinter.printer.macAddress}}</p>
+                    <p>Emulation: {{emulation.value}}</p>
             </a>
             <a class="item" href="#" ng-if="!selectedPrinter.printer.portName" ng-click="printerTypePopup()">
                     Select a printer...
@@ -33,8 +34,34 @@
                         <i class="icon ion-chevron-right icon-accessory"></i> 
             </a>
             <div class="item item-divider">
+                Printer ICommandBuilderInterface Sample
+            </div>
+            <a class="item item-icon-right" ng-click="print()">
+                <p>Print</p>
+                <i class="icon ion-chevron-right icon-accessory"></i> 
+            </a>
+            <a class="item item-icon-right" ng-click="print(true)">
+                <p>Print (Horizontal Tabs example)</p>
+                <i class="icon ion-chevron-right icon-accessory"></i> 
+            </a>
+            <a class="item item-icon-right" ng-click="print(false, true)">
+                <p>Print (QRCode)</p>
+                <i class="icon ion-chevron-right icon-accessory"></i> 
+            </a>
+            <a class="item item-icon-right" ng-click="appendBitmap()">
+                <p>Print (appendBitmap command example)</p>
+                <i class="icon ion-chevron-right icon-accessory"></i> 
+            </a>
+            <div class="item item-divider">
+                Printer StarIOextManager Sample
+            </div>
+            <a class="item item-icon-right" href="#/stario/{{selectedPrinter.printer.portName}}/{{emulation.value}}">
+                <p>Sample</p>
+                <i class="icon ion-chevron-right icon-accessory"></i> 
+            </a>              
+            <div class="item item-divider">
                 Cash Drawer
-            </div>  
+            </div>                        
             <a class="item item-icon-right" ng-click="openCashDrawer()">
                 <p>Sample</p>
                 <i class="icon ion-chevron-right icon-accessory"></i> 

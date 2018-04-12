@@ -78,6 +78,8 @@
     </platform>
     <allow-navigation href="http://192.168.0.5:8100" />
     <allow-navigation href="http://192.168.3.57:8100" />
+    <allow-navigation href="http://192.168.3.26:8100" />
+    <allow-navigation href="http://192.168.3.34:8100" />
     <engine name="android" spec="~6.3.0" />
     <engine name="ios" spec="~4.5.4" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
@@ -86,5 +88,5 @@
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-plugin-camera" spec="^4.0.2" />
-    <plugin name="cordova-plugin-starprnt" spec="git+https://github.com/auctifera-josed/starprnt.git" />
+    <plugin name="cordova-plugin-starprnt" spec="file:../starprnt-master" />
 </widget>
