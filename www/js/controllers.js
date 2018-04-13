@@ -163,8 +163,8 @@ angular.module('starter.controllers', [])
         var printObj = {text: "         Star Clothing Boutique\n" +
         "                        123 Star Road\n" +
         "                      City, State 12345\n",
-        cutReceipt: "true",
-        openCashDrawer: "true",
+        cutReceipt: true,
+        openCashDrawer: true,
         };
 
         if (StarPRTN) {
@@ -214,8 +214,8 @@ angular.module('starter.controllers', [])
         "And tags attached\n",
         fontSize: 25,
         paperWidth: 576,
-        cutReceipt:"true",
-        openCashDrawer:"true"
+        cutReceipt:true,
+        openCashDrawer:true
         };
 
     
@@ -277,7 +277,9 @@ angular.module('starter.controllers', [])
      printPicture = function(uri){
          var printObj = {
              uri: uri,
-             width: 576
+             width: 576,
+             cutReceipt:true,
+             openCashDrawer:true
          };
         if (StarPRTN) {
             $ionicLoading.show({template: '<ion-spinner></ion-spinner> Communicating...'});
@@ -298,8 +300,10 @@ angular.module('starter.controllers', [])
          if(useHorizontalTab){ //Horizonatal Tab command is not supported by TSP100, SM-S210i, SM-S220i, SM-S230i, SM-T300i/T300, SM-T400i
             commands.push({appendInternational: 'UK'});
              commands.push({appendCharacterSpace: 1});
-             commands.push({appendLogo:1,      //Logo number configured using Star Print utility (only available on certain models)
-                                  logoSize:"Normal"})
+             /*commands.push({appendLogo:1,      //Logo number configured using Star Print utility (only available on certain models)
+                                  logoSize:"Normal"})*/
+             commands.push({appendLogo:1})      //Logo number configured using Star Print utility (only available on certain models)
+                                   
              commands.push({appendAlignment:"Center"});
              commands.push({append: "Star Clothing Boutique\n" +
              "123 Star Road\n" +
@@ -349,12 +353,12 @@ angular.module('starter.controllers', [])
                             BarcodeSymbology:"Code128",
                             BarcodeWidth:"Mode2",
                             height:40,
-                            hri:"true"
+                            hri:true
             });
             commands.push({appendUnitFeed:64});
             commands.push({appendCutPaper:'PartialCutWithFeed'});
-            //commands.push({openCashDrawer:1}); //open cash drawer no 1
-            //commands.push({openCashDrawer:2}); //open cash drawer no 2
+            commands.push({openCashDrawer:1}); //open cash drawer no 1
+            commands.push({openCashDrawer:2}); //open cash drawer no 2
          }else{
              commands.push({appendInternational: 'UK'});
              commands.push({appendLogo:1,
@@ -411,7 +415,7 @@ angular.module('starter.controllers', [])
                             BarcodeSymbology:"Code128",
                             BarcodeWidth:"Mode2",
                             height:40,
-                            hri:"true",
+                            hri:true,
                             alignment:"Center"
             });
             }   
@@ -621,8 +625,8 @@ angular.module('starter.controllers', [])
         var printObj = {text: "         Star Clothing Boutique\n" +
         "                        123 Star Road\n" +
         "                      City, State 12345\n",
-        cutReceipt: "true",
-        openCashDrawer: "true",
+        cutReceipt: true,
+        openCashDrawer: true,
         };
 
         if (StarPRTN) {
@@ -672,8 +676,8 @@ angular.module('starter.controllers', [])
         "And tags attached\n",
         fontSize: 25,
         paperWidth: 576,
-        cutReceipt:"true",
-        openCashDrawer:"true"
+        cutReceipt:true,
+        openCashDrawer:true
         };
 
     
@@ -807,7 +811,7 @@ angular.module('starter.controllers', [])
                             BarcodeSymbology:"Code128",
                             BarcodeWidth:"Mode2",
                             height:40,
-                            hri:"true"
+                            hri:true
             });
             commands.push({appendUnitFeed:64});
             commands.push({appendCutPaper:'PartialCutWithFeed'});
@@ -869,7 +873,7 @@ angular.module('starter.controllers', [])
                             BarcodeSymbology:"Code128",
                             BarcodeWidth:"Mode2",
                             height:40,
-                            hri:"true",
+                            hri:true,
                             alignment:"Center"
             });
             }   
