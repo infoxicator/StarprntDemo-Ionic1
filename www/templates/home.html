@@ -5,8 +5,8 @@
                       Destination Device
             </div>                  
             <a class="item" ng-if="selectedPrinter.printer.portName" ng-click="printerTypePopup()">
-                    <p>Name: {{selectedPrinter.printer.portName}}</p>
-                    <p>MacAddress: {{selectedPrinter.printer.macAddress}}</p>
+                    <h2> {{selectedPrinter.printer.modelName}}</h2>
+                    <p>{{selectedPrinter.printer.portName}} ({{selectedPrinter.printer.macAddress}})</p>
                     <p>Emulation: {{emulation.value}}</p>
             </a>
             <a class="item" href="#" ng-if="!selectedPrinter.printer.portName" ng-click="printerTypePopup()">

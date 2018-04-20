@@ -15,8 +15,8 @@
             <ion-list ng-if="printers.length > 0">
             <div class="item item-divider">List</div>
             <ion-radio ng-model="selectedPrinter.printer" ng-repeat="printer in printers" ng-value="printer">
-                <p>Name: {{printer.portName}}</p>
-                <p>MacAddress: {{printer.macAddress}}</p>
+                <h2> {{printer.modelName}}</h2>
+                <p>{{printer.portName}} ({{printer.macAddress}})</p>
             </ion-radio>
             </ion-list>
         <button class="button button-full button-dark" ng-click="showEmulationPopup()">
